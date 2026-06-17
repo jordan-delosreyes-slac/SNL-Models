@@ -1,0 +1,69 @@
+# SVN files
+.svn*
+
+# EMACS temp files
+*~
+
+# Compiled source files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+*.bin
+*.ld
+*.dat
+*.htm
+*.log
+
+# Matlab
+*.autosave
+*.slxc
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumps.db
+*.swp
+build.info
+
+# Build directories
+build*
+docs/_build/
+# Exception: documentation files whose names start with "build"
+!docs/**/build_*.rst
+images*
+bin*
+.Xil*
+.obj*
+.ipynb_checkpoints*
+*.jou
+slprj*
+linux*
+
+# Only .bit.gz and .mcs.gz should be committed to git
+*.bit
+*.mcs
+*.gz
+*.ltx
+*.hdf
+*.vho
+*.zip
+*.xsa
+*.pdi
+*.bif
+*.elf
+
+# AI Agents
+.vscode/
+.cursor/
+.claude/
+.planning/
+planning/
+CLAUDE.md
