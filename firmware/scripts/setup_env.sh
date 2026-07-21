@@ -61,6 +61,10 @@ function setup ()
     local script_dir=`dirname $script_fn`
     local prj_root=`dirname $script_dir`
 
+    # Saved under a distinct name: sourcing the snl env below reassigns
+    # `prj_root` in this dynamic scope, so keep our own copy for the final cd.
+    local hlsbs_root=${prj_root}
+
     # ------------------------------
     # Source the ruckus setup script
     # ------------------------------
@@ -80,11 +84,19 @@ function setup ()
     export ex2=${prj_root}/ex2/project/Streams.py
     export ex3=${prj_root}/ex3/project/Streams.py
     export ex4=${prj_root}/ex4/project/Streams.py
+    export ex5=${prj_root}/ex5/project/MLP.py
+
+    # -----------------------------------------------------------
+    # Source the SNL submodule env. Sets SNL_ROOT and adds the
+    # acquirer/adapter build commands (SnlBuildAcquirerAll,
+    # SnlBuildAdapter) needed by the ex5 SNL ML example.
+    # -----------------------------------------------------------
+    source ${prj_root}/submodules/snl/scripts/setup_env.sh
 
     # ---------------------------------------
     # Change to hlsBs-examples root directory
     # ---------------------------------------
-    cd ${prj_root}
+    cd ${hlsbs_root}
 }
 # ------------------------------------------------------------------------
 

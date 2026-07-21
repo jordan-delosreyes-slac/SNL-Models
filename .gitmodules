@@ -6,3 +6,6 @@
 	url = https://github.com/slaclab/surf.git
 [submodule "./"]
 	branch = jj-dev
+[submodule "firmware/submodules/snl"]
+	path = firmware/submodules/snl
+	url = git@github.com:slaclab/snl

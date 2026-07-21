@@ -1,0 +1,81 @@
+digraph hlsBs_agent {
+    rankdir=TB
+    fontname="Helvetica"
+    fontsize=12
+    node [fontname="Helvetica", fontsize=11, style=filled, fillcolor=white]
+    edge [fontname="Helvetica", fontsize=10]
+
+    // Subgraph: SDF Local System
+    subgraph cluster_sdf {
+        label="SDF Local System"
+        style=filled
+        fillcolor="#f0f4ff"
+        color="#336699"
+        penwidth=2
+        fontsize=13
+        fontcolor="#336699"
+
+        // Subgraph: Shell environment
+        subgraph cluster_env {
+            label="Shell Environment (pre-sourced)"
+            style=dashed
+            color="#999999"
+            fillcolor="#ffffff"
+            fontsize=11
+            fontcolor="#666666"
+
+            env [label="setup_env.sh\nhlsLocate\nhlsVersion", shape=box, fillcolor="#e8e8e8"]
+        }
+
+        // Subgraph: Python agent
+        subgraph cluster_agent {
+            label="agent.py  (Python)"
+            style=filled
+            fillcolor="#fff8e8"
+            color="#cc8800"
+            penwidth=2
+            fontsize=12
+            fontcolor="#cc8800"
+
+            user    [label="User Request\n\"Set up ex0 and run csim\"", shape=oval, fillcolor="#d4edda"]
+            init    [label="Initialize messages list", shape=box, fillcolor="#fffde7"]
+            loop    [label="Agentic Loop", shape=diamond, fillcolor="#fff3cd"]
+            call    [label="client.messages.create()\n(model, tools, messages, system)", shape=box, fillcolor="#fff3cd"]
+            check   [label="stop_reason?", shape=diamond, fillcolor="#fff3cd"]
+            extract [label="Extract tool_use block\n(command string)", shape=box, fillcolor="#fff3cd"]
+            subproc [label="subprocess.run(command)\n[hlsWs / hlsCfg / hlsRun / ...]", shape=box, fillcolor="#fce4ec"]
+            capture [label="Capture stdout + stderr", shape=box, fillcolor="#fce4ec"]
+            append  [label="Append tool_result\nto messages", shape=box, fillcolor="#fff3cd"]
+            answer  [label="Print final\ntext answer", shape=oval, fillcolor="#d4edda"]
+        }
+    }
+
+    // Subgraph: Anthropic cloud
+    subgraph cluster_cloud {
+        label="Anthropic Cloud"
+        style=filled
+        fillcolor="#f0fff4"
+        color="#228b22"
+        penwidth=2
+        fontsize=13
+        fontcolor="#228b22"
+
+        claude  [label="claude-opus-4-7\n\nReceives:\n• conversation history\n• tool schema\n• system prompt\n\nReturns:\n• tool_use  OR  end_turn", shape=box, fillcolor="#c8e6c9"]
+    }
+
+    // Edges
+    user    -> init     [label="start"]
+    init    -> loop
+    loop    -> call
+    call    -> claude   [label="HTTPS POST /v1/messages", color="#228b22", fontcolor="#228b22"]
+    claude  -> check    [label="response", color="#228b22", fontcolor="#228b22"]
+    check   -> extract  [label="tool_use", color="#cc6600", fontcolor="#cc6600"]
+    check   -> answer   [label="end_turn", color="#336699", fontcolor="#336699"]
+    extract -> subproc
+    subproc -> capture  [label="runs on SDF\nwith Vitis/Xilinx", color="#cc0000", fontcolor="#cc0000"]
+    capture -> append
+    append  -> loop     [label="loop back", style=dashed]
+
+    // Environment feeds into subprocess
+    env -> subproc      [label="aliases available", style=dotted, color="#999999", fontcolor="#666666"]
+}
