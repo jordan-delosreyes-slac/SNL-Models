@@ -85,6 +85,9 @@ function setup ()
     export ex3=${prj_root}/ex3/project/Streams.py
     export ex4=${prj_root}/ex4/project/Streams.py
     export ex5=${prj_root}/ex5/project/MLP.py
+    export miniVGG=${prj_root}/miniVGG/project/MLP.py
+    export Speckle=${prj_root}/Speckle_NN/project/MLP.py
+    export Lenet5=${prj_root}/Lenet5_NN/project/MLP.py
 
     # -----------------------------------------------------------
     # Source the SNL submodule env. Sets SNL_ROOT and adds the
