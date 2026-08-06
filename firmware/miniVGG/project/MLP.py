@@ -48,9 +48,9 @@ def get_products (project) :
     # Runtime files, all relative to project.root (firmware/ex5).
     # snl.preserve keeps any ${ENV} variables intact for the .cfg file.
     # ------------------------------------------------------------------
-    input       = snl.preserve (os.path.join (project.root, 'data', 'mnist_test.npy'))
-    constants   = snl.preserve (os.path.join (project.root, 'data', 'mnist_mlp.keras'))
-    golden      = snl.preserve (os.path.join (project.root, 'data', 'mnist_golden.npy'))
+    input       = snl.preserve (os.path.join (project.root, 'data', 'input_data_fashionMNIST.npy'))
+    constants   = snl.preserve (os.path.join (project.root, 'data', 'minivgg_8kparemeter.keras'))
+    golden      = snl.preserve (os.path.join (project.root, 'data', 'golde_data_fashionMNIST.npy'))
 
     csim_argv   = snl.argv (input=input, constants=constants, golden=golden, ntests=5)
     cosim_argv  = snl.argv (input=input, constants=constants, golden=golden, ntests=5)
