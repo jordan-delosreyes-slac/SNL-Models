@@ -67,3 +67,6 @@ linux*
 .planning/
 planning/
 CLAUDE.md
+
+# I don't want it to track other directories than SNL-hlsBS
+/hlsBs-examples/
